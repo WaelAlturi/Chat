@@ -1,5 +1,5 @@
 import express from "express";
-import bcrypt from "bcrypt";
+import bcrypt, { compare, hash } from "bcrypt";
 import user from "../Modules/User.Modules.js";
 
 const route = express.Router();
@@ -32,4 +32,26 @@ route.post("/signup", async (req, res) => {
     });
   }
 });
+route.post("/signin", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const check = await user.findOne({ email });
+    if (!check) {
+      return res.status(401).json("Wrong Email or Password");
+    }
+
+    const comparePassword = await bcrypt.compare(password, check.password);
+    if (!comparePassword) {
+      return res.status(401).json("Wrong Email or Password");
+    }
+
+    return res.status(200).json({
+      message: "Signin successful",
+    });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+});
+
 export default route;
