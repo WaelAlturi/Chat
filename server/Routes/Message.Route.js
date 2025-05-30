@@ -5,17 +5,10 @@ import auth from "../Middleware/tokenAuth.js";
 
 const route = express.Router();
 
-route.get("/", auth, (req, res) => {
+route.get("/", auth, async (req, res) => {
   try {
-    Message.find({})
-      .then((messages) => {
-        res.status(200).json(messages);
-      })
-      .catch((e) => {
-        res.status(500).json({
-          message: e.message,
-        });
-      });
+    const messages = await Message.find({ sender: req.user.id });
+    res.status(200).json(messages);
   } catch (e) {
     res.status(500).json({ message: e.message });
   }
@@ -23,22 +16,26 @@ route.get("/", auth, (req, res) => {
 
 route.post("/newmessage", auth, async (req, res) => {
   try {
-    const { receiver } = req.body;
+    const { receiver, content } = req.body;
 
-    await User.findById(receiver).then(() => {
-      new Message(req.body)
-        .save()
-        .then(() => {
-          res.status(200).json({ message: "Add New Message" });
-        })
-        .catch((err) => {
-          res.status(500).json({ message: err.message });
-        });
+    const receiverExists = await User.findById(receiver);
+    if (!receiverExists) {
+      return res.status(404).json({ message: "Receiver not found" });
+    }
+
+    const message = new Message({
+      sender: req.user.id,
+      receiver,
+      content,
     });
+
+    await message.save();
+    res.status(200).json({ message: "New message added" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
+
 route.delete("/deletemessage/:_id", auth, async (req, res) => {
   try {
     const _id = req.params._id;
