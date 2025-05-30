@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import Account from "./Routes/Account.Route.js";
+import Message from "./Routes/Message.Route.js";
 
 dotenv.config();
 const app = express();
@@ -20,6 +21,7 @@ mongoose
   });
 
 app.use("/account", Account);
+app.use("/", Message);
 
 app.listen(process.env.PORT, () => {
   console.log(`Run On PORT:${process.env.PORT}`);

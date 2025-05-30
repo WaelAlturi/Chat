@@ -34,7 +34,6 @@ route.post("/signup", async (req, res) => {
 });
 route.post("/signin", async (req, res) => {
   const { email, password } = req.body;
-
   try {
     const check = await user.findOne({ email });
     if (!check) {
@@ -48,6 +47,7 @@ route.post("/signin", async (req, res) => {
 
     return res.status(200).json({
       message: "Signin successful",
+      check,
     });
   } catch (e) {
     res.status(500).json({ message: e.message });
