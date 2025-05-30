@@ -1,8 +1,6 @@
 import jwt from "jsonwebtoken";
 
 const verfiytoken = (req, res, next) => {
-  console.log(req);
-
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res.status(401).json({ message: "Access denied" });
@@ -16,4 +14,4 @@ const verfiytoken = (req, res, next) => {
     res.status(401).json({ message: "Invalid Token" });
   }
 };
-module.exports = verfiytoken;
+export default verfiytoken;

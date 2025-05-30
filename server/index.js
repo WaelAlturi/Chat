@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import Account from "./Routes/Account.Route.js";
 import Message from "./Routes/Message.Route.js";
+import auth from "./Middleware/tokenAuth.js";
 
 dotenv.config();
 const app = express();
@@ -19,9 +20,9 @@ mongoose
   .catch((e) => {
     console.log(e.message);
   });
-
 app.use("/account", Account);
 app.use("/", Message);
+app.use(auth);
 
 app.listen(process.env.PORT, () => {
   console.log(`Run On PORT:${process.env.PORT}`);

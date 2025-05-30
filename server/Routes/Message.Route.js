@@ -1,10 +1,11 @@
 import express from "express";
 import Message from "../Modules/Message.Modules.js";
 import User from "../Modules/User.Modules.js";
+import auth from "../Middleware/tokenAuth.js";
 
 const route = express.Router();
 
-route.get("/", (req, res) => {
+route.get("/", auth, (req, res) => {
   try {
     Message.find({})
       .then((messages) => {
@@ -20,7 +21,7 @@ route.get("/", (req, res) => {
   }
 });
 
-route.post("/newmessage", async (req, res) => {
+route.post("/newmessage", auth, async (req, res) => {
   try {
     const { receiver } = req.body;
 
@@ -38,7 +39,7 @@ route.post("/newmessage", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-route.delete("/deletemessage/:_id", async (req, res) => {
+route.delete("/deletemessage/:_id", auth, async (req, res) => {
   try {
     const _id = req.params._id;
 
@@ -57,7 +58,7 @@ route.delete("/deletemessage/:_id", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-route.put("/editmessage/:_id", async (req, res) => {
+route.put("/editmessage/:_id", auth, async (req, res) => {
   try {
     const _id = req.params._id;
 

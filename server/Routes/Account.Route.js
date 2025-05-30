@@ -1,6 +1,7 @@
 import express from "express";
 import bcrypt, { compare, hash } from "bcrypt";
 import user from "../Modules/User.Modules.js";
+import jwt from "jsonwebtoken";
 
 const route = express.Router();
 
@@ -32,6 +33,7 @@ route.post("/signup", async (req, res) => {
     });
   }
 });
+
 route.post("/signin", async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -45,9 +47,14 @@ route.post("/signin", async (req, res) => {
       return res.status(401).json("Wrong Email or Password");
     }
 
+    const token = jwt.sign({ id: check._id }, process.env.JWT_KEY, {
+      expiresIn: "7d",
+    });
+
     return res.status(200).json({
       message: "Signin successful",
-      check,
+      token,
+      user: check,
     });
   } catch (e) {
     res.status(500).json({ message: e.message });
