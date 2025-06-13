@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useAuth from "../Store/useAuth.js";
 
 function SignIn() {
+  const navigate = useNavigate();
   const [data, setData] = useState({
     username: "",
     email: "",
@@ -11,6 +13,7 @@ function SignIn() {
 
   const handleLogin = () => {
     login(data);
+    navigate("/");
   };
   const handleRegister = () => {
     register(data);

@@ -1,11 +1,13 @@
-import Login from "./pages/LoginPage";
-function App() {
+import Login from "./pages/LoginPage.jsx";
+import Home from "./pages/HomePage.jsx";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+export default function App() {
   return (
-    <div>
-      <h1>MAIN</h1>
-      <Login />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-export default App;
