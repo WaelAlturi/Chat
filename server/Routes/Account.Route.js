@@ -45,12 +45,12 @@ route.post("/signin", async (req, res) => {
     const check = await user.findOne({ email });
     debugger;
     if (!check) {
-      return res.status(401).json("Wrong Email or Password:  " + email);
+      return res.status(401).json("Wrong Email or Password:");
     }
 
     const comparePassword = await bcrypt.compare(password, check.password);
     if (!comparePassword) {
-      return res.status(401).json("Wrong Email or Password" + comparePassword);
+      return res.status(401).json("Wrong Email or Password");
     }
 
     const token = jwt.sign({ id: check._id }, process.env.JWT_KEY, {
