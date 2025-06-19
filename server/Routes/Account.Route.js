@@ -31,7 +31,6 @@ route.post("/signup", async (req, res) => {
             });
         }
       });
-    debugger;
   } catch (e) {
     res.status(401).json({
       message: e.message,
@@ -43,7 +42,6 @@ route.post("/signin", async (req, res) => {
   const { email, password } = req.body;
   try {
     const check = await user.findOne({ email });
-    debugger;
     if (!check) {
       return res.status(401).json("Wrong Email or Password:");
     }

@@ -6,13 +6,11 @@ const messagesStore = create(() => ({
   messageReceiver: async (receiver) => {
     try {
       const token = useAuth.getState().authUser?.token;
-      debugger;
       await axiosInstance.post("/newmessage", receiver, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      debugger;
     } catch (error) {
       console.error(error.response.data);
     }

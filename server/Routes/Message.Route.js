@@ -8,12 +8,8 @@ const route = express.Router();
 route.get("/", auth, async (req, res) => {
   try {
     const messages = await Message.find({ sender: req.user.id });
-    debugger;
-
     res.status(200).json(messages);
   } catch (e) {
-    debugger;
-
     res.status(500).json({ message: e.message });
   }
 });
@@ -23,7 +19,6 @@ route.post("/newmessage", auth, async (req, res) => {
     const { receverUsername, content } = req.body;
     const receiverExists = await User.findOne({ username: receverUsername });
 
-    debugger;
     if (!receiverExists) {
       return res.status(404).json({ message: "Receiver not found" });
     }
@@ -33,10 +28,8 @@ route.post("/newmessage", auth, async (req, res) => {
       receiver: receiverExists.id,
       content,
     });
-    debugger;
     await message.save();
     res.status(200).json({ message: "New message added" });
-    debugger;
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
