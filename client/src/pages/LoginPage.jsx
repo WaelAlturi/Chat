@@ -9,6 +9,7 @@ function SignIn() {
     email: "",
     password: "",
   });
+  const [status, setStatus] = useState(true);
   const { login, register } = useAuth();
 
   const handleLogin = () => {
@@ -19,39 +20,102 @@ function SignIn() {
     register(data);
   };
   return (
-    <div className="bg-black h-full w-full justify-center items-center">
-      <div className="h-1/2 w-1/2">
-        <h1>LoginSide</h1>
-        <input
-          className="text-white"
-          type="email"
-          onChange={(e) => setData({ ...data, email: e.target.value })}
-        />
-        <input
-          className="text-white"
-          type="password"
-          onChange={(e) => setData({ ...data, password: e.target.value })}
-        />
-        <button onClick={handleLogin}>Login</button>
-      </div>
-      <div className="h-1/2 w-1/2">
-        <h1>Register Side</h1>
-        <input
-          className="text-white"
-          type="text"
-          onChange={(e) => setData({ ...data, username: e.target.value })}
-        />
-        <input
-          className="text-white"
-          type="email"
-          onChange={(e) => setData({ ...data, email: e.target.value })}
-        />
-        <input
-          className="text-white"
-          type="password"
-          onChange={(e) => setData({ ...data, password: e.target.value })}
-        />
-        <button onClick={handleRegister}>Register</button>
+    <div className="hero bg-base-200 min-h-screen">
+      <div className="hero-content flex-col lg:flex-row relative w-full justify-center items-center">
+        <div
+          className={`flex flex-col lg:flex-row  gap-2 absolute justify-center items-center transition-opacity duration-700 ease-in-out ${
+            status ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <div className="text-center lg:text-left">
+            <h1 className="text-5xl font-bold">Login now! 🔐</h1>
+            <p className="py-6">
+              ChatterBox is your new favorite place to connect 🤝
+              <br />
+              Enjoy smooth, real-time conversations fast ⚡, simple 🧠, and fun
+              🎉!
+            </p>
+          </div>
+          <div className="card bg-base-100 w-full max-w-sm shadow-2xl">
+            <div className="card-body">
+              <fieldset className="form-control">
+                <label className="label">Email</label>
+                <input
+                  type="email"
+                  className="input input-bordered"
+                  placeholder="Email"
+                />
+                <label className="label">Password</label>
+                <input
+                  type="password"
+                  className="input input-bordered"
+                  placeholder="Password"
+                />
+                <a className="text-sm text-right mt-2 link link-hover">
+                  Forgot password?
+                </a>
+                <button className="btn btn-neutral mt-4">Login</button>
+              </fieldset>
+              <p className="mt-4 text-sm text-center">
+                Don’t have an account?
+                <button
+                  onClick={() => setStatus(false)}
+                  className="ml-1 text-primary hover:underline"
+                >
+                  Register
+                </button>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          className={`flex flex-col lg:flex-row absolute gap-2 justify-center items-center transition-opacity duration-700 ease-in-out ${
+            !status ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+        >
+          <div className="text-center lg:w-1/2 lg:text-left">
+            <h1 className="text-5xl font-bold">Join ChatterBox 📝</h1>
+            <p className="py-6">
+              Sign up to start chatting with friends in real time 💬
+              <br />
+              Simple, fast, and full of good vibes 🎉
+            </p>
+          </div>
+          <div className="card bg-base-100 w-full max-w-sm shadow-2xl">
+            <div className="card-body">
+              <fieldset className="form-control">
+                <label className="label">Username</label>
+                <input
+                  type="text"
+                  className="input input-bordered"
+                  placeholder="Username"
+                />
+                <label className="label">Email</label>
+                <input
+                  type="email"
+                  className="input input-bordered"
+                  placeholder="Email"
+                />
+                <label className="label">Password</label>
+                <input
+                  type="password"
+                  className="input input-bordered"
+                  placeholder="Password"
+                />
+                <button className="btn btn-neutral mt-4">Register</button>
+              </fieldset>
+              <p className="mt-4 text-sm text-center">
+                Already have an account?
+                <button
+                  onClick={() => setStatus(true)}
+                  className="ml-1 text-primary hover:underline"
+                >
+                  Login
+                </button>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
