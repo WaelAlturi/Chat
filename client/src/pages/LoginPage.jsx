@@ -28,12 +28,11 @@ function SignIn() {
           }`}
         >
           <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold">Login now! 🔐</h1>
+            <h1 className="text-5xl font-bold">Login now 🔐</h1>
             <p className="py-6">
               ChatterBox is your new favorite place to connect 🤝
               <br />
-              Enjoy smooth, real-time conversations fast ⚡, simple 🧠, and fun
-              🎉!
+              Enjoy smooth, real-time conversations fast ⚡
             </p>
           </div>
           <div className="card bg-base-100 w-full max-w-sm shadow-2xl">
@@ -44,17 +43,23 @@ function SignIn() {
                   type="email"
                   className="input input-bordered"
                   placeholder="Email"
+                  onChange={(e) => setData({ ...data, email: e.target.value })}
                 />
                 <label className="label">Password</label>
                 <input
                   type="password"
                   className="input input-bordered"
                   placeholder="Password"
+                  onChange={(e) =>
+                    setData({ ...data, password: e.target.value })
+                  }
                 />
-                <a className="text-sm text-right mt-2 link link-hover">
+                {/* <a className="text-sm text-right mt-2 link link-hover">
                   Forgot password?
-                </a>
-                <button className="btn btn-neutral mt-4">Login</button>
+                </a> */}
+                <button className="btn btn-neutral mt-4" onClick={handleLogin}>
+                  Login
+                </button>
               </fieldset>
               <p className="mt-4 text-sm text-center">
                 Don’t have an account?
@@ -74,7 +79,7 @@ function SignIn() {
           }`}
         >
           <div className="text-center lg:w-1/2 lg:text-left">
-            <h1 className="text-5xl font-bold">Join ChatterBox 📝</h1>
+            <h1 className="text-4xl font-bold">Join ChatterBox 📝</h1>
             <p className="py-6">
               Sign up to start chatting with friends in real time 💬
               <br />
@@ -89,20 +94,32 @@ function SignIn() {
                   type="text"
                   className="input input-bordered"
                   placeholder="Username"
+                  onChange={(e) =>
+                    setData({ ...data, username: e.target.value })
+                  }
                 />
                 <label className="label">Email</label>
                 <input
                   type="email"
                   className="input input-bordered"
                   placeholder="Email"
+                  onChange={(e) => setData({ ...data, email: e.target.value })}
                 />
                 <label className="label">Password</label>
                 <input
                   type="password"
                   className="input input-bordered"
                   placeholder="Password"
+                  onChange={(e) =>
+                    setData({ ...data, password: e.target.value })
+                  }
                 />
-                <button className="btn btn-neutral mt-4">Register</button>
+                <button
+                  className="btn btn-neutral mt-4"
+                  onClick={handleRegister}
+                >
+                  Register
+                </button>
               </fieldset>
               <p className="mt-4 text-sm text-center">
                 Already have an account?
