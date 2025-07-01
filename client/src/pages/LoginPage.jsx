@@ -11,7 +11,6 @@ function SignIn() {
   });
   const [status, setStatus] = useState(true);
   const { login, register } = useAuth();
-
   const handleLogin = () => {
     login(data);
     navigate("/");

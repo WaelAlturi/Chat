@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import Account from "./Routes/Account.Route.js";
 import Message from "./Routes/Message.Route.js";
+import User from "./Routes/Users.route.js";
 import auth from "./Middleware/tokenAuth.js";
 
 dotenv.config();
@@ -22,6 +23,7 @@ mongoose
   });
 app.use("/account", Account);
 app.use("/", Message);
+app.use("/user", User);
 app.use(auth);
 
 app.listen(process.env.PORT, () => {

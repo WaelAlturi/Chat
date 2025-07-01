@@ -1,7 +1,13 @@
 import { useState } from "react";
 import messageStore from "../Store/messageStore.js";
+import ChatBox from "../components/ChatBox.jsx";
+import Users from "../components/Sidebar.jsx";
+import Header from "../components/Header.jsx";
+import useAuth from "../Store/useAuth.js";
 
 function Home() {
+  const { authUser } = useAuth();
+  useAuth();
   const [data, setData] = useState({
     receverUsername: "",
     content: "",
@@ -11,21 +17,19 @@ function Home() {
     messageReceiver(data);
   };
   return (
-    <div className="h-1/2 w-1/2">
-      <h1>new message</h1>
-      UserName
-      <input
-        className="text-white"
-        type="text"
-        onChange={(e) => setData({ ...data, receverUsername: e.target.value })}
-      />
-      Content:
-      <input
-        className="text-white"
-        type="text"
-        onChange={(e) => setData({ ...data, content: e.target.value })}
-      />
-      <button onClick={handleMessageRecevier}>Login</button>
+    <div className="h-screen w-full">
+      <div className=" w-full h-1/12">
+        <Header className />
+      </div>
+      <div className="flex w-full h-11/12">
+        <Users />
+        <ChatBox
+          userName={authUser.user.username}
+          receiverName="JohnDoe"
+          content="Hello there!"
+          time="2025-06-30 20:05"
+        />
+      </div>
     </div>
   );
 }

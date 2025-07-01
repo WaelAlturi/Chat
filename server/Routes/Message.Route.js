@@ -5,9 +5,18 @@ import auth from "../Middleware/tokenAuth.js";
 
 const route = express.Router();
 
-route.get("/", auth, async (req, res) => {
+route.get("/:_id", auth, async (req, res) => {
   try {
-    const messages = await Message.find({ sender: req.user.id });
+    const myId = req.user.id;
+    const otherId = req.params._id;
+
+    const messages = await Message.find({
+      $or: [
+        { sender: myId, receiver: otherId },
+        { sender: otherId, receiver: myId },
+      ],
+    }).sort({ timestamp: 1 });
+
     res.status(200).json(messages);
   } catch (e) {
     res.status(500).json({ message: e.message });
@@ -16,16 +25,16 @@ route.get("/", auth, async (req, res) => {
 
 route.post("/newmessage", auth, async (req, res) => {
   try {
-    const { receverUsername, content } = req.body;
-    const receiverExists = await User.findOne({ username: receverUsername });
-
+    const { receiver, content } = req.body;
+    const receiverExists = await User.findOne({ username: receiver });
+    debugger;
     if (!receiverExists) {
       return res.status(404).json({ message: "Receiver not found" });
     }
 
     const message = new Message({
       sender: req.user.id,
-      receiver: receiverExists.id,
+      receiver: receiverExists._id,
       content,
     });
     await message.save();
