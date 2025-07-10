@@ -1,11 +1,10 @@
 import axiosInstance from "../utils/axiosInstance";
 import useAuth from "./useAuth";
 import { create } from "zustand";
-
-const messagesStore = create((set) => ({
+const messagesStore = create((set, get) => ({
   receiverSelected: null,
   setReceiverSelected: (id) => set({ receiverSelected: id }),
-  fetchMessages: [],
+  messagesData: [],
   messages: async (id) => {
     try {
       const token = useAuth.getState().authUser?.token;
@@ -14,24 +13,29 @@ const messagesStore = create((set) => ({
           Authorization: `Bearer ${token}`,
         },
       });
-      set({ messages: response.data });
-      debugger;
+      set({ messagesData: response.data });
     } catch (error) {
-      debugger;
-
       console.error(error.response?.data);
     }
   },
-  messageReceiver: async () => {
+  messageReceiver: async (content) => {
     try {
       const token = useAuth.getState().authUser?.token;
-      await axiosInstance.post("/newmessage", receiverSelected.username, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const receiver = get().receiverSelected;
+      await axiosInstance.post(
+        "/newmessage",
+        {
+          receiver: receiver.username,
+          content,
         },
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
     } catch (error) {
-      console.error(error.response.data);
+      console.error(error.response?.data);
     }
   },
 }));

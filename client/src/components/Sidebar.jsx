@@ -13,8 +13,9 @@ export default function Users() {
       {users.map((user) => (
         <button
           key={user._id}
-          className="avatar flex justify-center items-center h-1/12 w-5/6 p-3 transition delay-75 ease-in-out hover:bg-accent-content "
+          className="avatar flex justify-center items-center h-1/12 w-5/6 p-3 transition delay-75 ease-in-out hover:bg-accent-content focus:bg-accent-content "
           onClick={() => {
+            setReceiverSelected(user);
             messages(user._id);
           }}
         >
