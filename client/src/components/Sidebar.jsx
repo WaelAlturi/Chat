@@ -16,7 +16,7 @@ export default function Users() {
           className="avatar flex justify-center items-center h-1/12 w-5/6 p-3 transition delay-75 ease-in-out hover:bg-accent-content focus:bg-accent-content "
           onClick={() => {
             setReceiverSelected(user);
-            messages(user._id);
+            messages();
           }}
         >
           <div className="rounded-full w-2/6 ">

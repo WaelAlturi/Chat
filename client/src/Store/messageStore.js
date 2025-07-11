@@ -5,10 +5,11 @@ const messagesStore = create((set, get) => ({
   receiverSelected: null,
   setReceiverSelected: (id) => set({ receiverSelected: id }),
   messagesData: [],
-  messages: async (id) => {
+  messages: async () => {
     try {
       const token = useAuth.getState().authUser?.token;
-      const response = await axiosInstance.get(`/${id}`, {
+      const receiver = get().receiverSelected;
+      const response = await axiosInstance.get(`/${receiver._id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -34,6 +35,9 @@ const messagesStore = create((set, get) => ({
           },
         }
       );
+      set((state) => ({
+        messagesData: [...state.messagesData, res.data],
+      }));
     } catch (error) {
       console.error(error.response?.data);
     }
