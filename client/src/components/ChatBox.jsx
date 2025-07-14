@@ -12,8 +12,8 @@ export default function ChatBox() {
   }, [messagesData]);
 
   return (
-    <div className="h-full w-5/6 flex flex-col justify-between p-4 rounded-md bg-base-300 shadow-xl">
-      <div className="flex flex-col overflow-y-auto h-[75vh] p-4">
+    <div className="flex flex-col justify-between h-full w-full p-2 sm:p-4 bg-base-300 rounded-md shadow-xl">
+      <div className="flex-1 overflow-y-auto p-2 sm:p-4 space-y-2">
         {messagesData?.map((msg, index) => {
           const isSender = msg.sender === authUser?.user?._id;
           return (
@@ -22,7 +22,7 @@ export default function ChatBox() {
               className={`chat ${isSender ? "chat-start" : "chat-end"}`}
             >
               <div className="chat-image avatar">
-                <div className="w-10 rounded-full">
+                <div className="w-8 sm:w-10 rounded-full">
                   <img
                     src={
                       isSender
@@ -33,32 +33,33 @@ export default function ChatBox() {
                   />
                 </div>
               </div>
-              <div className="chat-header">
+              <div className="chat-header text-sm sm:text-base">
                 {isSender
                   ? authUser?.user?.username
                   : receiverSelected?.username}
-                <time className="text-xs opacity-50 ml-2">
+                <time className="ml-2 text-xs opacity-50">
                   {new Date(msg.timestamp).toLocaleTimeString()}
                 </time>
               </div>
-              <div className="chat-bubble bg-accent-content">{msg.content}</div>
+              <div className="chat-bubble bg-accent-content break-words max-w-xs sm:max-w-md lg:max-w-xl">
+                {msg.content}
+              </div>
             </div>
           );
         })}
         <div ref={bottomRef} />
       </div>
-
-      <div className="pt-4">
+      <div className="pt-2 sm:pt-4">
         <div className="flex gap-2">
           <input
             type="text"
             placeholder="Type your message..."
-            className="input input-ghost input-lg input-accent w-full"
+            className="input input-bordered input-accent w-full"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           />
           <button
-            className="btn btn-ghost btn-accent"
+            className="btn btn-accent"
             onClick={async () => {
               await messageReceiver(inputValue);
               setInputValue("");

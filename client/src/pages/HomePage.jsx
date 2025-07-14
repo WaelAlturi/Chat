@@ -4,32 +4,27 @@ import ChatBox from "../components/ChatBox.jsx";
 import Users from "../components/Sidebar.jsx";
 import Header from "../components/Header.jsx";
 import useAuth from "../Store/useAuth.js";
+import { Toaster } from "react-hot-toast";
 
 function Home() {
   const { authUser } = useAuth();
   useAuth();
-  const [data, setData] = useState({
-    receverUsername: "",
-    content: "",
-  });
-  const { messageReceiver } = messageStore();
-  const handleMessageRecevier = () => {
-    messageReceiver(data);
-  };
   return (
-    <div className="h-screen w-full">
-      <div className=" w-full h-1/12">
-        <Header className />
+    <div className="h-screen w-full flex flex-col">
+      <div className="h-auto">
+        <Header />
       </div>
-      <div className="flex w-full h-11/12">
-        <Users />
-        <ChatBox
-          userName={authUser.user.username}
-          receiverName="JohnDoe"
-          content="Hello there!"
-          time="2025-06-30 20:05"
-        />
+
+      <div className="flex-1 flex flex-row overflow-hidden">
+        <div className="w-1/3 lg:w-1/4 xl:w-1/6 max-h-full overflow-y-auto">
+          <Users />
+        </div>
+        <div className="flex-1 overflow-hidden">
+          <ChatBox userName={authUser.user.username} />
+        </div>
       </div>
+
+      <Toaster />
     </div>
   );
 }

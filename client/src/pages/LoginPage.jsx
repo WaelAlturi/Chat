@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../Store/useAuth.js";
+import toast, { Toaster } from "react-hot-toast";
 
 function SignIn() {
   const navigate = useNavigate();
@@ -15,9 +16,23 @@ function SignIn() {
     login(data);
     navigate("/");
   };
-  const handleRegister = () => {
-    register(data);
+  const handleRegister = async () => {
+    const { username, email, password } = data;
+
+    if (!username || !email || !password) {
+      toast.error("All fields are required");
+      return;
+    }
+
+    try {
+      await register(data);
+      setData({ username: "", email: "", password: "" });
+      setStatus(true);
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Registration failed");
+    }
   };
+
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row relative w-full justify-center items-center">
@@ -53,9 +68,6 @@ function SignIn() {
                     setData({ ...data, password: e.target.value })
                   }
                 />
-                {/* <a className="text-sm text-right mt-2 link link-hover">
-                  Forgot password?
-                </a> */}
                 <button className="btn btn-neutral mt-4" onClick={handleLogin}>
                   Login
                 </button>
@@ -133,6 +145,7 @@ function SignIn() {
           </div>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 }

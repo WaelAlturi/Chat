@@ -1,7 +1,7 @@
 import useAuth from "../Store/useAuth";
 
 export default function Header() {
-  const { authUser } = useAuth();
+  const { authUser, logout } = useAuth();
   return (
     <div className=" navbar bg-base-100 shadow-sm h-full">
       <div className="flex-1">
@@ -19,13 +19,7 @@ export default function Header() {
         </div>
         <ul className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
           <li>
-            <a className="justify-between">Profile</a>
-          </li>
-          <li>
-            <a>Settings</a>
-          </li>
-          <li>
-            <a>Logout</a>
+            <button onClick={logout}>Logout</button>
           </li>
         </ul>
       </div>

@@ -9,20 +9,22 @@ export default function Users() {
     fetchUsers();
   }, []);
   return (
-    <div className="join join-vertical w-1/6 h-full p-10 overflow-y-auto bg-base-200 shadow-2xl">
+    <div className="w-full h-full bg-base-200 p-4 space-y-2 shadow-inner">
       {users.map((user) => (
         <button
           key={user._id}
-          className="avatar flex justify-center items-center h-1/12 w-5/6 p-3 transition delay-75 ease-in-out hover:bg-accent-content focus:bg-accent-content "
+          className="flex items-center gap-3 p-2 rounded hover:bg-accent-content transition"
           onClick={() => {
             setReceiverSelected(user);
             messages();
           }}
         >
-          <div className="rounded-full w-2/6 ">
-            <img src={user.avatar} />
+          <div className="avatar">
+            <div className="w-10 rounded-full">
+              <img src={user.avatar} alt="avatar" />
+            </div>
           </div>
-          <span className="w-2/6 text-center">{user.username}</span>
+          <span className="text-sm truncate">{user.username}</span>
         </button>
       ))}
     </div>

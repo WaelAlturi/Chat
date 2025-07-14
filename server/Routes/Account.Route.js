@@ -64,5 +64,8 @@ route.post("/signin", async (req, res) => {
     res.status(500).json({ message: e.message });
   }
 });
+route.post("/logout", (req, res) => {
+  res.status(200).json({ message: "Logged out successfully" });
+});
 
 export default route;

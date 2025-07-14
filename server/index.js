@@ -6,9 +6,8 @@ import Account from "./Routes/Account.Route.js";
 import Message from "./Routes/Message.Route.js";
 import User from "./Routes/Users.route.js";
 import auth from "./Middleware/tokenAuth.js";
-
+import { app, server } from "./socket.js";
 dotenv.config();
-const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -26,6 +25,6 @@ app.use("/", Message);
 app.use("/user", User);
 app.use(auth);
 
-app.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, () => {
   console.log(`Run On PORT:${process.env.PORT}`);
 });

@@ -36,7 +36,7 @@ const messagesStore = create((set, get) => ({
         }
       );
       set((state) => ({
-        messagesData: [...state.messagesData, res.data],
+        messagesData: [...state.messagesData],
       }));
     } catch (error) {
       console.error(error.response?.data);
