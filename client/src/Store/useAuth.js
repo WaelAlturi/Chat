@@ -21,7 +21,7 @@ const useAuth = create((set, get) => ({
       await axiosInstance.post("/account/signup", data);
       toast.success("Register Completed");
     } catch (error) {
-      toast.error(error.response.data);
+      toast.error(error.response?.data?.message);
     }
   },
   logout: async () => {
