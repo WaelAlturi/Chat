@@ -2,12 +2,12 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 import Account from "./Routes/Account.Route.js";
 import Message from "./Routes/Message.Route.js";
 import User from "./Routes/Users.route.js";
 import auth from "./Middleware/tokenAuth.js";
-import path from "path";
-import { fileURLToPath } from "url";
 import { app, server } from "./socket.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -33,7 +33,6 @@ app.use(auth);
 
 const clientBuildPath = path.join(__dirname, "..", "client", "dist");
 app.use(express.static(clientBuildPath));
-
 app.get("/{*any}", (req, res) => {
   res.sendFile(path.join(clientBuildPath, "index.html"));
 });
