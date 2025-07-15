@@ -29,13 +29,15 @@ mongoose
 app.use("/api/account", Account);
 app.use("/api/", Message);
 app.use("/api/user", User);
-app.use(auth);
 
 const clientBuildPath = path.join(__dirname, "..", "client", "dist");
 app.use(express.static(clientBuildPath));
 app.get("/{*any}", (req, res) => {
   res.sendFile(path.join(clientBuildPath, "index.html"));
 });
+
+app.use(auth);
+
 server.listen(process.env.PORT, () => {
   console.log(`Run On PORT:${process.env.PORT}`);
 });
