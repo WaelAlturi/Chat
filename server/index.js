@@ -26,9 +26,9 @@ mongoose
   .catch((e) => {
     console.log(e.message);
   });
-app.use("/account", Account);
-app.use("/", Message);
-app.use("/user", User);
+app.use("/api/account", Account);
+app.use("/api/", Message);
+app.use("/api/user", User);
 app.use(auth);
 
 const clientBuildPath = path.join(__dirname, "..", "client", "dist");
